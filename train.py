@@ -7,18 +7,18 @@ from tensorflow.keras.layers import Dense
 import joblib
 import os
 
-# دالة لتحميل ومعالجة البيانات
+# Function to load and process data
 def load_and_process_data(file_path):
     data = pd.read_csv(file_path)
-    # استبدال القيم المفقودة (NaN) وغير الصالحة (مثل '?') بـ -1
+    # Replace missing values (NaN) and invalid values (like '?') with -1
     data = data.fillna(-1)
-    data = data.replace('?', -1)  # استبدال '?' بـ -1
-    # تحويل أعمدة الحركات إلى أعداد صحيحة
+    data = data.replace('?', -1)  # Replace '?' with -1
+    # Convert move columns to integers
     for col in ['MOVE1', 'MOVE2', 'MOVE3', 'MOVE4', 'MOVE5', 'MOVE6', 'MOVE7']:
         data[col] = data[col].astype(int)
     return data
 
-# دالة لتدريب النموذج أو تحديثه
+# Function to train or update the model
 def train_model(X, y, model_path="tic_tac_toe_model.h5", retrain=False):
     if retrain and os.path.exists(model_path):
         model = load_model(model_path)
@@ -38,21 +38,21 @@ def train_model(X, y, model_path="tic_tac_toe_model.h5", retrain=False):
     print(f"Test Accuracy: {accuracy * 100:.2f}%")
     return model
 
-# تحميل البيانات الأصلية
+# Load the original dataset
 try:
     data = load_and_process_data("Tic tac initial results.csv")
 except FileNotFoundError:
-    print("خطأ: ملف 'Tic tac initial results.csv' غير موجود في المجلد!")
+    print("Error: 'Tic tac initial results.csv' file not found in the directory!")
     exit(1)
 
-# تحويل العمود CLASS إلى قيم رقمية
+# Convert the CLASS column to numeric values
 le = LabelEncoder()
 data['CLASS'] = le.fit_transform(data['CLASS'])  # win=2, draw=0, loss=1
 X = data[['MOVE1', 'MOVE2', 'MOVE3', 'MOVE4', 'MOVE5', 'MOVE6', 'MOVE7']].values
 y = data['CLASS'].values
 
-# تدريب النموذج الأولي
+# Train the initial model
 model = train_model(X, y)
 
-# حفظ LabelEncoder
+# Save the LabelEncoder
 joblib.dump(le, "label_encoder.pkl")
