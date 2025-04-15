@@ -55,6 +55,7 @@ The application enables players to:
 **Game Mechanics:**
 - Game logic uses the Minimax algorithm with alpha-beta pruning to calculate the best AI move
 - Player and AI alternate turns until a win/draw occurs
+![image](https://github.com/user-attachments/assets/4dd8586f-10d4-4ff4-95e0-045103b7b92f)
 
 **User Actions:**
 - 🔍 **Predict:** Predict game result based on current player moves
