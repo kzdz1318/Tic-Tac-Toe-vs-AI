@@ -64,6 +64,7 @@ The application enables players to:
 
 **Data File:** `game_data.csv`
 - Stores new games in format: `MOVE1` to `MOVE7` and `CLASS`
+![image](https://github.com/user-attachments/assets/2d52bae7-7f9f-4f5b-a56b-2a66efda926e)
 
 ---
 
